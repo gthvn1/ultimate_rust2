@@ -15,23 +15,20 @@ fn play_time(dolphin: &Dolphin) -> Result<Vec<String>> {
     let mut responses = vec![];
     // 2b. Call the .say_your_name() method on `dolphin`, use `?` to unwrap the value, and push
     // the value onto the `responses` vector.
-    //
-    match dolphin.say_your_name() {
-        Err(e) => return Err(e.into()),
-        Ok(name) => responses.push(name),
-    };
+
+    //match dolphin.say_your_name() {
+    //    Err(e) => return Err(e.into()),
+    //    Ok(name) => responses.push(name),
+    //};
+    // This is equivalent to:
+    // let response = dolphin.say_your_name()?
+    responses.push(dolphin.say_your_name()?);
 
     // 2c. Do the same thing as #2b for the .flip() method
-    match dolphin.flip() {
-        Err(e) => return Err(e.into()),
-        Ok(s) => responses.push(s),
-    };
+    responses.push(dolphin.flip()?);
 
     // 2d. Do the same thing as #2b for the .shake_hands() method
-    match dolphin.shake_hands() {
-        Err(e) => return Err(e.into()),
-        Ok(s) => responses.push(s),
-    };
+    responses.push(dolphin.shake_hands()?);
 
     Ok(responses)
 }
