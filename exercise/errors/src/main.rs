@@ -3,28 +3,38 @@
 use aquarium::Dolphin;
 // Silence some warnings so they don't distract from the exercise.
 #[allow(clippy::vec_init_then_push)]
-
 // (You already did #1 in lib.rs, right?)
 //
 // 2a. Uncomment and finish the play_time function below
 // - Bring anyhow::Result into scope with a `use` statement
 // - Have the play_time function return a `Result<Vec<String>>`. The vector of Strings will
 //   represent successful outcomes of various dolphin tricks.
+use anyhow::Result;
 
-// fn play_time(dolphin: &Dolphin) -> ... {
-//     let mut responses = vec![];
-//     // 2b. Call the .say_your_name() method on `dolphin`, use `?` to unwrap the value, and push
-//     // the value onto the `responses` vector.
-//     //
-//     // let response = ...    // this can be done with an intermediate variable...
-//     // responses.push( ... ) // ...or all on one line. Either way is fine!
-//     //
-//     // 2c. Do the same thing as #2b for the .flip() method
-//     //
-//     // 2d. Do the same thing as #2b for the .shake_hands() method
-//
-//     Ok(responses)
-// }
+fn play_time(dolphin: &Dolphin) -> Result<Vec<String>> {
+    let mut responses = vec![];
+    // 2b. Call the .say_your_name() method on `dolphin`, use `?` to unwrap the value, and push
+    // the value onto the `responses` vector.
+    //
+    match dolphin.say_your_name() {
+        Err(e) => return Err(e.into()),
+        Ok(name) => responses.push(name),
+    };
+
+    // 2c. Do the same thing as #2b for the .flip() method
+    match dolphin.flip() {
+        Err(e) => return Err(e.into()),
+        Ok(s) => responses.push(s),
+    };
+
+    // 2d. Do the same thing as #2b for the .shake_hands() method
+    match dolphin.shake_hands() {
+        Err(e) => return Err(e.into()),
+        Ok(s) => responses.push(s),
+    };
+
+    Ok(responses)
+}
 
 fn main() {
     let dolphins = vec![
@@ -52,7 +62,7 @@ fn main() {
     for dolphin in &dolphins {
         // Challenge: Change main() so that it returns a Result, and instead of handling the error
         // that play_time returns, use the try (?) operator to only handle the success condition.
-        // 
+        //
         // If done correctly, the output of the program will become much shorter. Since play_time
         // returns an Err variant the first time it is called, the try operator will return it from
         // main(), which will end the program at the first error. anyhow's Result will take care of
