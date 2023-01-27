@@ -15,14 +15,15 @@
 // `cargo build --lib` without any build errors or warnings. Then go to main.rs and continue with #2
 use thiserror::Error;
 
+#[non_exhaustive]
 #[derive(Debug, Error)]
 pub enum DolphinError {
-    #[error("Name is too long")]
-    LongName,
-    #[error("Dolphin is too young")]
-    TooYoung,
-    #[error("Dolphin is hungry")]
+    #[error("The dolphin is hungry")]
     Hungry,
+    #[error("The dolphin is too young")]
+    TooYoung,
+    #[error("The dolphin's name is too long and annoying to say")]
+    LongName,
 }
 
 pub struct Dolphin {
